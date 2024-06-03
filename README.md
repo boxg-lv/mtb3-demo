@@ -23,8 +23,8 @@ Showcase for SA-MP tournament base. Fully compatible with OpenMP. Contains vario
 - Debugging tools such as /setscore
 - Much more
 
-The demo contains advanced tournament features that is included in "mtb3-demo", but not included in "mtb3-base":
-- Randomly generated "mine field" using explosive barrels and drunk level (also contains spawning behaviour override)
+The demo contains advanced tournament features that are included in "mtb3-demo", but not included in "mtb3-base":
+- Randomly generated "mine field" using explosive barrels and drunk level (also contains spawning behavior override)
 - Randomly spawning "bomb field" that predicts player movement, even when drifting
 - Pickup search using "signal" with sound and a progress bar
 - Winner's lounge
