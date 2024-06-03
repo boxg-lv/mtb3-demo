@@ -1,6 +1,6 @@
 # MTB3 Demo
 
-[![sampctl](https://img.shields.io/badge/sampctl-omp_tournament-2f2f2f.svg?style=for-the-badge)](https://github.com/boxg-lv/mtb3-demo)
+[![sampctl](https://img.shields.io/badge/sampctl-mtb3_demo-2f2f2f.svg?style=for-the-badge)](https://github.com/boxg-lv/mtb3-demo)
 
 Showcase for SA-MP tournament base. Fully compatible with OpenMP. Contains various advanced features such as:
 - Saves player progress after disconnect
@@ -38,7 +38,7 @@ Pull the project:
 git clone https://github.com/boxg-lv/mtb3-demo.git
 ```
 
-> :warning: Code does not contain the file scriptfiles/colandreas/ColAndreas.cadb! You need to generate your own file using the (https://github.com/Pottus/ColAndreas/releases)[ColAndreasWizard.exe] and place the generated file in scriptfiles/colandreas/ColAndreas.cadb!
+> :warning: Code does not contain the file scriptfiles/colandreas/ColAndreas.cadb! You need to generate your own file using the [ColAndreasWizard.exe](https://github.com/Pottus/ColAndreas/releases) and place the generated file in scriptfiles/colandreas/ColAndreas.cadb!
 
 
 Use sampctl to build the code:
