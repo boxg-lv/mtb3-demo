@@ -1,6 +1,12 @@
-//This code was supposed to be under Apache 2.0 license, but due to complexity of licensing when multiple packages are involved, this code (and anything else that does not have a specific license) has the "IDFCALJUIFA" license. Also known as the "I DON'T FUCKING CARE ABOUT LICENSES, JUST USE IT FOR ANYTHING" license.
+/*
+This code was supposed to be under Apache 2.0 license,
+but due to complexity of licensing when multiple packages are involved,
+this code (and anything else that does not have a specific license) has the "IDFCALJUIFA" license.
+Also known as the "I DON'T FUCKING CARE ABOUT LICENSES, JUST USE IT FOR ANYTHING" license.
 
-//Check README.md for details on how to use this code.
+Check README.md for details on how to use this code.
+*/
+//
 
 //CUSTOMIZABLE_START------------------------------------------------------------------------------------
 #define TOURNAMENT_NAME "MTB Race 3"
@@ -782,7 +788,8 @@ public OnGameModeExit() {
 public OnDynamicActorStreamIn(actorid, forplayerid) {
     Logger_Dbg("tournament", "OnDynamicActorStreamIn", Logger_I("actorid", actorid), Logger_I("forplayerid", forplayerid));
     if(actorid == TheNPC) {
-        SetTimerEx("DelayActorAnimation", 1000, false, "dssfddddd", actorid, "BEACH", "PARKSIT_W_LOOP", 4.0999, 1, 0, 0, 0, 0); //This is needed since the animation sometimes does not get applied when player is teleported to the finish
+        SetTimerEx("DelayActorAnimation", 1000, false, "dssfddddd", actorid, "BEACH", "PARKSIT_W_LOOP", 4.0999, 1, 0, 0, 0, 0);
+        //This is needed since the animation sometimes does not get applied when player is teleported to the finish
     }
     return true;
 }
@@ -853,7 +860,8 @@ public OnPlayerPickUpPlayerPickup(playerid, pickupid) {
                     }
                 }
             }
-            Iter_Remove(DirectionalPickups[playerid], PickupidToPointid[playerid][pickupid]); //Remove the pointid that the player just picked up, this will allow ShowPickupDirection to start pointing towards the next pickup
+            Iter_Remove(DirectionalPickups[playerid], PickupidToPointid[playerid][pickupid]);
+            //Remove the pointid that the player just picked up, this will allow ShowPickupDirection to start pointing towards the next pickup
         }
         PointidToPickupid[playerid][PickupidToPointid[playerid][pickupid]] = INVALID_PICKUP_ID;
         PickupidToPointid[playerid][pickupid] = INVALID_POINT_ID;
@@ -1283,31 +1291,36 @@ stock InitTournamentDB() {
         SendRconCommand("exit");
         return false;
     }
-    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB, "CREATE TABLE IF NOT EXISTS `score` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`PlayerScore` INTEGER NOT NULL)"))) {
+    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB,
+        "CREATE TABLE IF NOT EXISTS `score` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`PlayerScore` INTEGER NOT NULL)"))) {
         Logger_Fatal("Could not create DB score table, must exit");
         SendRconCommand("exit");
         return false;
     }
 
-    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB, "CREATE TABLE IF NOT EXISTS `speed` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`SpeedX` FLOAT(13,8),`SpeedY` FLOAT(13,8),`SpeedZ` FLOAT(13,8),`SpeedR` FLOAT(13,8))"))) {
+    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB,
+        "CREATE TABLE IF NOT EXISTS `speed` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`SpeedX` FLOAT(13,8),`SpeedY` FLOAT(13,8),`SpeedZ` FLOAT(13,8),`SpeedR` FLOAT(13,8))"))) {
         Logger_Fatal("Could not create DB speed table, must exit");
         SendRconCommand("exit");
         return false;
     }
 
-    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB, "CREATE TABLE IF NOT EXISTS `pickuphistory` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`PointID` INTEGER NOT NULL)"))) {
+    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB,
+        "CREATE TABLE IF NOT EXISTS `pickuphistory` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`PointID` INTEGER NOT NULL)"))) {
         Logger_Fatal("Could not create DB pickup history table, must exit");
         SendRconCommand("exit");
         return false;
     }
 
-    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB, "CREATE TABLE IF NOT EXISTS `vehicles` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`model` INTEGER NOT NULL,`colour1` INTEGER NOT NULL,`colour2` INTEGER NOT NULL)"))) {
+    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB,
+        "CREATE TABLE IF NOT EXISTS `vehicles` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`model` INTEGER NOT NULL,`colour1` INTEGER NOT NULL,`colour2` INTEGER NOT NULL)"))) {
         Logger_Fatal("Could not create DB vehicle table, must exit");
         SendRconCommand("exit");
         return false;
     }
 
-    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB, "CREATE TABLE IF NOT EXISTS `finish` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`PlayerTime` INTEGER NOT NULL,`PlayerPos` INTEGER NOT NULL)"))) {
+    if(!DB_FreeResultSet(DB_ExecuteQuery(TournamentDB,
+        "CREATE TABLE IF NOT EXISTS `finish` (`id` INTEGER PRIMARY KEY AUTOINCREMENT,`PlayerName` VARCHAR(24) NOT NULL,`PlayerTime` INTEGER NOT NULL,`PlayerPos` INTEGER NOT NULL)"))) {
         Logger_Fatal("Could not create DB finish table, must exit");
         SendRconCommand("exit");
         return false;
@@ -1359,7 +1372,8 @@ stock AddPOI(Float:pX, Float:pY, Float:pZ, const label[]) {
 }
 
 stock SetSpawnPoint(Float:SpawnX, Float:SpawnY, Float:SpawnZ, Float:SpawnAngle, Float:SpawnArea) {
-    Logger_Dbg("tournament", "SetSpawnPoint", Logger_F("SpawnX", SpawnX), Logger_F("SpawnY", SpawnY), Logger_F("SpawnZ", SpawnZ), Logger_F("SpawnAngle", SpawnAngle), Logger_F("SpawnArea", SpawnArea));
+    Logger_Dbg("tournament", "SetSpawnPoint", Logger_F("SpawnX", SpawnX), Logger_F("SpawnY", SpawnY),
+    Logger_F("SpawnZ", SpawnZ), Logger_F("SpawnAngle", SpawnAngle), Logger_F("SpawnArea", SpawnArea));
     SpawnCenter[T_SX] = SpawnX;
     SpawnCenter[T_SY] = SpawnY;
     SpawnCenter[T_SZ] = SpawnZ;
@@ -1368,7 +1382,9 @@ stock SetSpawnPoint(Float:SpawnX, Float:SpawnY, Float:SpawnZ, Float:SpawnAngle, 
 }
 
 stock AddTournamentVehicle(modelid, Float:spawnX, Float:spawnY, Float:spawnZ, Float:angle, colour1, colour2, pointid) {
-    Logger_Dbg("tournament", "AddTournamentVehicle", Logger_F("spawnX", spawnX), Logger_F("spawnY", spawnY), Logger_F("spawnZ", spawnZ), Logger_F("angle", angle), Logger_I("colour1", colour1), Logger_I("colour2", colour2), Logger_I("pointid", pointid));
+    Logger_Dbg("tournament", "AddTournamentVehicle", Logger_F("spawnX", spawnX),
+    Logger_F("spawnY", spawnY), Logger_F("spawnZ", spawnZ), Logger_F("angle", angle),
+    Logger_I("colour1", colour1), Logger_I("colour2", colour2), Logger_I("pointid", pointid));
     TournamentVehicleSpawns[T_RealTVehicleCount][T_VModel] = modelid;
     TournamentVehicleSpawns[T_RealTVehicleCount][T_VX] = spawnX;
     TournamentVehicleSpawns[T_RealTVehicleCount][T_VY] = spawnY;
@@ -1480,7 +1496,8 @@ stock PopulateVehicleBatches() {
 }
 
 stock AddRacePoint(CP_TYPE, Float:RaceX, Float:RaceY, Float:RaceZ, Float:RaceSize, RaceInterior = NO_INTERIOR, bool:vehiclerequired = false, bool:spawninvehicle = false) {
-    Logger_Dbg("tournament", "AddRacePoint", Logger_I("CP_TYPE", CP_TYPE), Logger_F("RaceX", RaceX), Logger_F("RaceY", RaceY), Logger_F("RaceZ", RaceZ), Logger_F("RaceSize", RaceSize), Logger_I("RaceInterior", RaceInterior), Logger_B("vehiclerequired", vehiclerequired), Logger_B("spawninvehicle", spawninvehicle));
+    Logger_Dbg("tournament", "AddRacePoint", Logger_I("CP_TYPE", CP_TYPE), Logger_F("RaceX", RaceX), Logger_F("RaceY", RaceY), Logger_F("RaceZ", RaceZ),
+    Logger_F("RaceSize", RaceSize), Logger_I("RaceInterior", RaceInterior), Logger_B("vehiclerequired", vehiclerequired), Logger_B("spawninvehicle", spawninvehicle));
     T_RaceData[T_RealTPointsCount][T_Type] = CP_TYPE:CP_TYPE;
     T_RaceData[T_RealTPointsCount][T_X] = RaceX;
     T_RaceData[T_RealTPointsCount][T_Y] = RaceY;
@@ -1499,7 +1516,9 @@ stock AddRacePoint(CP_TYPE, Float:RaceX, Float:RaceY, Float:RaceZ, Float:RaceSiz
 }
 
 stock AddCheckPoint(Float:RaceX, Float:RaceY, Float:RaceZ, Float:RaceSize, RaceInterior = NO_INTERIOR, bool:vehiclerequired = false) {
-    Logger_Dbg("tournament", "AddCheckPoint", Logger_F("RaceX", RaceX), Logger_F("RaceY", RaceY), Logger_F("RaceZ", RaceZ), Logger_F("RaceSize", RaceSize), Logger_I("RaceInterior", RaceInterior), Logger_B("vehiclerequired", vehiclerequired));
+    Logger_Dbg("tournament", "AddCheckPoint", Logger_F("RaceX", RaceX), Logger_F("RaceY", RaceY),
+    Logger_F("RaceZ", RaceZ), Logger_F("RaceSize", RaceSize), Logger_I("RaceInterior", RaceInterior),
+    Logger_B("vehiclerequired", vehiclerequired));
     T_RaceData[T_RealTPointsCount][T_Type] = CP_TYPE:CP_STANDARD;
     T_RaceData[T_RealTPointsCount][T_X] = RaceX;
     T_RaceData[T_RealTPointsCount][T_Y] = RaceY;
@@ -1667,9 +1686,13 @@ stock SetNextRacePointForPlayer(playerid, playerscore) {
     Logger_Dbg("tournament", "SetNextRacePointForPlayer", Logger_I("playerid", playerid), Logger_I("playerscore", playerscore));
     if(playerscore < (T_RealTPointsCount-1)) { //Regular
         if(T_RaceData[playerscore][T_NextORenable]) {
-            SetPlayerRaceCheckpoint(playerid, CP_TYPE:T_RaceData[playerscore][T_Type], T_RaceData[playerscore][T_X], T_RaceData[playerscore][T_Y], T_RaceData[playerscore][T_Z], T_RaceData[playerscore][T_NextORX], T_RaceData[playerscore][T_NextORY], T_RaceData[playerscore][T_NextORZ], T_RaceData[playerscore][T_Size]);
+            SetPlayerRaceCheckpoint(playerid, CP_TYPE:T_RaceData[playerscore][T_Type], T_RaceData[playerscore][T_X],
+            T_RaceData[playerscore][T_Y], T_RaceData[playerscore][T_Z], T_RaceData[playerscore][T_NextORX],
+            T_RaceData[playerscore][T_NextORY], T_RaceData[playerscore][T_NextORZ], T_RaceData[playerscore][T_Size]);
         } else {
-            SetPlayerRaceCheckpoint(playerid, CP_TYPE:T_RaceData[playerscore][T_Type], T_RaceData[playerscore][T_X], T_RaceData[playerscore][T_Y], T_RaceData[playerscore][T_Z], T_RaceData[playerscore+1][T_X], T_RaceData[playerscore+1][T_Y], T_RaceData[playerscore+1][T_Z], T_RaceData[playerscore][T_Size]);
+            SetPlayerRaceCheckpoint(playerid, CP_TYPE:T_RaceData[playerscore][T_Type], T_RaceData[playerscore][T_X],
+            T_RaceData[playerscore][T_Y], T_RaceData[playerscore][T_Z], T_RaceData[playerscore+1][T_X],
+            T_RaceData[playerscore+1][T_Y], T_RaceData[playerscore+1][T_Z], T_RaceData[playerscore][T_Size]);
         }
     } else { //Finish CP
         new CP_TYPE:NextTRaceType = CP_TYPE_GROUND_FINISH;
@@ -1678,7 +1701,9 @@ stock SetNextRacePointForPlayer(playerid, playerscore) {
                 NextTRaceType = CP_TYPE_AIR_FINISH;
             }
         }
-        SetPlayerRaceCheckpoint(playerid, NextTRaceType, T_RaceData[playerscore][T_X], T_RaceData[playerscore][T_Y], T_RaceData[playerscore][T_Z], T_RaceData[playerscore-1][T_X], T_RaceData[playerscore-1][T_Y], T_RaceData[playerscore-1][T_Z], T_RaceData[playerscore][T_Size]);
+        SetPlayerRaceCheckpoint(playerid, NextTRaceType, T_RaceData[playerscore][T_X], T_RaceData[playerscore][T_Y], 
+        T_RaceData[playerscore][T_Z], T_RaceData[playerscore-1][T_X], T_RaceData[playerscore-1][T_Y],
+        T_RaceData[playerscore-1][T_Z], T_RaceData[playerscore][T_Size]);
     }
     return true;
 }
@@ -1891,7 +1916,9 @@ stock DetermineSpawnPoint(pointid, playerid) {
 }
 
 stock SetPlayerRandomSpawn(playerid, pointid, Float:newspawnx, Float:newspawny, Float:newspawnz, Float:newspawnarea, spawnpointid) {
-    Logger_Dbg("tournament", "SetPlayerRandomSpawn", Logger_I("playerid", playerid), Logger_F("newspawnx", newspawnx), Logger_F("newspawny", newspawny), Logger_F("newspawnz", newspawnz), Logger_F("newspawnarea", newspawnarea), Logger_I("spawnpointid", spawnpointid));
+    Logger_Dbg("tournament", "SetPlayerRandomSpawn", Logger_I("playerid", playerid), Logger_F("newspawnx", newspawnx),
+        Logger_F("newspawny", newspawny), Logger_F("newspawnz", newspawnz), Logger_F("newspawnarea", newspawnarea),
+        Logger_I("spawnpointid", spawnpointid));
     //When setting spawn that is a checkpoint, the player might spawn outside the checkpoint slightly.
     //This is because we are using an spawn area not radius, calculating a random radius is too resourceful
     //unless.. someone has a sound mathematical way to do it
@@ -2623,7 +2650,9 @@ stock ResetTournamentVehicles() {
 
     new vehicleid = INVALID_VEHICLE_ID;
     for(new i = 0; i<T_RealTVehicleCount; i++) {
-        vehicleid = CreateVehicle(TournamentVehicleSpawns[i][T_VModel], TournamentVehicleSpawns[i][T_VX], TournamentVehicleSpawns[i][T_VY], TournamentVehicleSpawns[i][T_VZ], TournamentVehicleSpawns[i][T_VA], TournamentVehicleSpawns[i][T_VC1], TournamentVehicleSpawns[i][T_VC2], 300);
+        vehicleid = CreateVehicle(TournamentVehicleSpawns[i][T_VModel], TournamentVehicleSpawns[i][T_VX],
+        TournamentVehicleSpawns[i][T_VY], TournamentVehicleSpawns[i][T_VZ], TournamentVehicleSpawns[i][T_VA],
+        TournamentVehicleSpawns[i][T_VC1], TournamentVehicleSpawns[i][T_VC2], 300);
         if(!IsCreatedVehicleValid(vehicleid)) {
             Logger_Err("Failed to respawn vehicle for restart", Logger_I("vehicleid", vehicleid));
             continue;
@@ -2782,7 +2811,8 @@ stock TDB_SavePlayerScore(playerid, playerscore) {
 }
 
 stock TDB_SavePlayerSpeed(playerid, Float:SpeedX, Float:SpeedY, Float:SpeedZ, Float:SpeedR) {
-    Logger_Dbg("tournament", "TDB_SavePlayerSpeed", Logger_I("playerid", playerid), Logger_F("SpeedX", SpeedX), Logger_F("SpeedY", SpeedY), Logger_F("SpeedZ", SpeedZ), Logger_F("SpeedR", SpeedR));
+    Logger_Dbg("tournament", "TDB_SavePlayerSpeed", Logger_I("playerid", playerid),
+    Logger_F("SpeedX", SpeedX), Logger_F("SpeedY", SpeedY), Logger_F("SpeedZ", SpeedZ), Logger_F("SpeedR", SpeedR));
     //Saves the last vehicle speed for player to re-create MTA race experience
     new playername[MAX_PLAYER_NAME];
     new DBResult:db_result;
@@ -3480,7 +3510,9 @@ stock Float:GetVehicleDrivingAngle(vehicleid, Float:SpeedX, Float:SpeedY, &Float
 @cmd() spec(playerid, params[], help) {
     new targetplayerid = INVALID_PLAYER_ID;
     new PLAYER_STATE:playerstate = GetPlayerState(playerid);
-    if(help || (isnull(params) && playerstate != PLAYER_STATE_SPECTATING) || (sscanf(params, "u", targetplayerid) && playerstate != PLAYER_STATE_SPECTATING)) return SendClientMessage(playerid, -1, "{FFFF00}>HELP:{FFFFFF} /spec [playerid] | Spectate a player.");
+    if(help || (isnull(params) && playerstate != PLAYER_STATE_SPECTATING) ||
+    (sscanf(params, "u", targetplayerid) && playerstate != PLAYER_STATE_SPECTATING)) 
+        return SendClientMessage(playerid, -1, "{FFFF00}>HELP:{FFFFFF} /spec [playerid] | Spectate a player.");
 
     if(isnull(params)) {
         if(GetPlayerState(playerid) == PLAYER_STATE_SPECTATING) {
@@ -3623,7 +3655,8 @@ stock Float:GetVehicleDrivingAngle(vehicleid, Float:SpeedX, Float:SpeedY, &Float
             CreatePlayerPickupBatch(playerid, playerscore);
         }
     }
-    FinishedPos[playerid] = 0; //This is needed to reset that the player has finished, this will allow the player to finish more than once, but that is expected for debugging reasons, /results will still show a single entry
+    FinishedPos[playerid] = 0;
+    //This is needed to reset that the player has finished, this will allow the player to finish more than once, but that is expected for debugging reasons, /results will still show a single entry
     DisablePlayerCheckpoint(playerid);
     DisablePlayerRaceCheckpoint(playerid);
     SetPlayerWeather(playerid, TOURNAMENT_WEATHER);
@@ -3659,10 +3692,38 @@ stock Float:GetVehicleDrivingAngle(vehicleid, Float:SpeedX, Float:SpeedY, &Float
     if(help) return SendClientMessage(playerid, -1, "{FFFF00}>HELP:{FFFFFF} /info | Print out basic information about the tournament.");
 
     new tmpstr[2048]; //For longer texts you might even need to increase this
-    format(tmpstr, 2048, "{E60000}======================[ {FFFFFF}Goals{E60000} ]=====================\n{FFFFFF}Your objective is simple: Be the fastest one to reach the last point.\nDuring the tournament, you may find various vehicles.\nUse them to reach your next point faster,\nbut sometimes a certain vehicle is better for the job than the other, choose wisely.\nSome points will require creative ways to reach them,\nuse your surroundings and vehicle!\n\n{E60000}======================[ {FFFFFF}Rules{E60000} ]=====================\n- {E60000}No cheats!{FFFFFF}\n- {E60000}No mods!{FFFFFF}\n- {00D200}If it is in the original game, then it is allowed!\n\n{E60000}======================[ {FFFFFF}Commands{E60000} ]=====================\n{00D200}/help{FFFFFF} - View command's help section.\n{00D200}/car, /veh, /bike, /plane, /boat{FFFFFF} - Summon your vehicle.\n{00D200}/kill{FFFFFF} - Make a suicide and respawn.\n{00D200}/results{FFFFFF} - View finishing times.\n{00D200}/spec{FFFFFF} - Spectate a player (after you have finished)\n{00D200}/poi{FFFFFF} - Set a waypoint to a POI.");
+    format(tmpstr, 2048, "{E60000}======================[ {FFFFFF}Goals{E60000} ]=====================\n");
+    format(tmpstr, 2048, "%s{FFFFFF}Your objective is simple: Be the fastest one to reach the last point.\n", tmpstr);
+    format(tmpstr, 2048, "%sDuring the tournament, you may find various vehicles.\n", tmpstr);
+    format(tmpstr, 2048, "%sUse them to reach your next point faster,\n", tmpstr);
+    format(tmpstr, 2048, "%sbut sometimes a certain vehicle is better for the job than the other, choose wisely.\n", tmpstr);
+    format(tmpstr, 2048, "%sSome points will require creative ways to reach them,\n", tmpstr);
+    format(tmpstr, 2048, "%suse your surroundings and vehicle!\n\n", tmpstr);
+    format(tmpstr, 2048, "%s{E60000}======================[ {FFFFFF}Rules{E60000} ]=====================\n", tmpstr);
+    format(tmpstr, 2048, "%s- {E60000}No cheats!{FFFFFF}\n", tmpstr);
+    format(tmpstr, 2048, "%s- {E60000}No mods!{FFFFFF}\n", tmpstr);
+    format(tmpstr, 2048, "%s- {00D200}If it is in the original game, then it is allowed!\n\n", tmpstr);
+    format(tmpstr, 2048, "%s{E60000}======================[ {FFFFFF}Commands{E60000} ]=====================\n", tmpstr);
+    format(tmpstr, 2048, "%s{00D200}/help{FFFFFF} - View command's help section.\n", tmpstr);
+    format(tmpstr, 2048, "%s{00D200}/car, /veh, /bike, /plane, /boat{FFFFFF} - Summon your vehicle.\n", tmpstr);
+    format(tmpstr, 2048, "%s{00D200}/kill{FFFFFF} - Make a suicide and respawn.\n");
+    format(tmpstr, 2048, "%s{00D200}/results{FFFFFF} - View finishing times.\n", tmpstr);
+    format(tmpstr, 2048, "%s{00D200}/spec{FFFFFF} - Spectate a player (after you have finished)\n", tmpstr);
+    format(tmpstr, 2048, "%s{00D200}/poi{FFFFFF} - Set a waypoint to a POI.", tmpstr);
 
     if(IsPlayerAdmin(playerid)) {
-        format(tmpstr, 2048, "%s\n\n{E60000}======================[ {FFFFFF}Admin{E60000} ]=====================\n{00D200}/start{FFFFFF} - Start the tournament while preserving player scores and positions.\n{00D200}/restart{FFFFFF} - Restart the tournament, teleports players to start and resets the score.\n{00D200}/goto{FFFFFF} - Teleport to a player.\n{00D200}/get{FFFFFF} - Teleport a player to you.\n{00D200}/unlockall{FFFFFF} - Unlocks all vehicles for you.\n{00D200}/unlock{FFFFFF} - Unlock your current vehicle for a player.\n{00D200}/setscore{FFFFFF} - Set your current score to a specific value.\n{00D200}/kick{FFFFFF} - Kicks a player.\n{00D200}/ban{FFFFFF} - Bans a player.\n{00D200}/spec{FFFFFF} - Spectate a player.\n{00D200}/respawnvehicles{FFFFFF} - Respawn batch of vehicles.", tmpstr);
+        format(tmpstr, 2048, "%s\n\n{E60000}======================[ {FFFFFF}Admin{E60000} ]=====================\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/start{FFFFFF} - Start the tournament while preserving player scores and positions.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/restart{FFFFFF} - Restart the tournament, teleports players to start and resets the score.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/goto{FFFFFF} - Teleport to a player.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/get{FFFFFF} - Teleport a player to you.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/unlockall{FFFFFF} - Unlocks all vehicles for you.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/unlock{FFFFFF} - Unlock your current vehicle for a player.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/setscore{FFFFFF} - Set your current score to a specific value.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/kick{FFFFFF} - Kicks a player.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/ban{FFFFFF} - Bans a player.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/spec{FFFFFF} - Spectate a player.\n", tmpstr);
+        format(tmpstr, 2048, "%s{00D200}/respawnvehicles{FFFFFF} - Respawn batch of vehicles.", tmpstr);
     }
     ShowPlayerDialog(playerid, DIALOG_HELP, DIALOG_STYLE_MSGBOX, "Help", tmpstr, "Close", "");
     return true;
@@ -4139,7 +4200,9 @@ public CountdownTournament() {
             SetPlayerHealth(i, 100);
             SetPlayerWorldBounds(i, WORLD_XMAX, WORLD_XMIN, WORLD_YMAX, WORLD_YMIN);
         }
-        StartingTime = GetTickCount(); //If tournament is started again, this will reset how long the tournament is running. This could be solved by tracking "uptime", but at this point it is not worth it. Minor bug
+        StartingTime = GetTickCount();
+        //If tournament is started again, this will reset how long the tournament is running.
+        //This could be solved by tracking "uptime", but at this point it is not worth it. Minor bug
         return true; //This is needed to prevent counter going negative
     }
     TournamentCountdown--;
@@ -4270,7 +4333,10 @@ public RespawnTournamentVehicle(vehiclespawnid, oldvehicleid) {
     if(VehicleRespawnTimers[oldvehicleid] == INVALID_TIMER) return false; //Something canceled the timer
 
     //The vehicle is not created when nobody is online. Since this is only an issue during testing, then a proper fix is not implemented. Issue is caused by OpenMP
-    new newvehicleid = CreateVehicle(TournamentVehicleSpawns[vehiclespawnid][T_VModel], TournamentVehicleSpawns[vehiclespawnid][T_VX], TournamentVehicleSpawns[vehiclespawnid][T_VY], TournamentVehicleSpawns[vehiclespawnid][T_VZ], TournamentVehicleSpawns[vehiclespawnid][T_VA], TournamentVehicleSpawns[vehiclespawnid][T_VC1], TournamentVehicleSpawns[vehiclespawnid][T_VC2], 300);
+    new newvehicleid = CreateVehicle(TournamentVehicleSpawns[vehiclespawnid][T_VModel],
+    TournamentVehicleSpawns[vehiclespawnid][T_VX], TournamentVehicleSpawns[vehiclespawnid][T_VY],
+    TournamentVehicleSpawns[vehiclespawnid][T_VZ], TournamentVehicleSpawns[vehiclespawnid][T_VA],
+    TournamentVehicleSpawns[vehiclespawnid][T_VC1], TournamentVehicleSpawns[vehiclespawnid][T_VC2], 300);
     Iter_Add(CreatedVehicles, newvehicleid);
     if(!IsCreatedVehicleValid(newvehicleid)) {
         Logger_Err("Failed to respawn vehicle for spawn", Logger_I("vehiclespawnid", vehiclespawnid));
